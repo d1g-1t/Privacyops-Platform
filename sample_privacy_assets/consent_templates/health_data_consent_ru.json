@@ -1,0 +1,12 @@
+{
+  "name": "Consent to the Processing of Special Categories of Personal Data (Medical Data)",
+  "purpose": "Provision of medical services and maintenance of medical records",
+  "version": 1,
+  "body_ru": "In accordance with Article 10 of Federal Law No. 152-FZ \"On Personal Data\", I hereby give explicit, specific, and informed consent to the processing of the following special categories of personal data:\n\n- Information on health status;\n- Diagnoses and examination results;\n- Prescriptions and treatment regimens.\n\nPurpose: provision of medical care, maintenance of medical records, and compliance with legal requirements in the field of public health protection.\n\nProcessing is carried out exclusively by medical personnel who are bound by an obligation to maintain medical confidentiality.\n\nRetention period: 25 years (in accordance with Order of the Ministry of Health No. 543n).",
+  "metadata": {
+    "law_article": "152-FZ Art. 10",
+    "data_categories": ["health", "special_category"],
+    "retention_years": 25,
+    "requires_explicit_consent": true
+  }
+}
