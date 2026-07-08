@@ -1,0 +1,17 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "privacyops-api"
+    metrics_path: /api/v1/health/metrics
+    static_configs:
+      - targets: ["api:8700"]
+        labels:
+          service: privacyops-api
+
+  - job_name: "celery-flower"
+    static_configs:
+      - targets: ["flower:5701"]
+        labels:
+          service: privacyops-flower
