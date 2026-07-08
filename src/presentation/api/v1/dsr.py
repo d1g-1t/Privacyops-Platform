@@ -13,6 +13,8 @@ from src.application.dto.dsr_dto import (
     RespondDSRRequest,
 )
 from src.application.use_cases.dsr_use_cases import DSRUseCases
+from fastapi import Depends
+
 from src.infrastructure.security.rbac import require_dpo
 from src.presentation.deps import (
     CurrentTenantId,
@@ -20,7 +22,7 @@ from src.presentation.deps import (
     get_dsr_use_cases,
 )
 
-router = APIRouter(prefix="/dsr", tags=["dsr"], dependencies=[require_dpo])
+router = APIRouter(prefix="/dsr", tags=["dsr"], dependencies=[Depends(require_dpo)])
 
 
 @router.post("", response_model=DSRResponse, status_code=201, response_class=ORJSONResponse)

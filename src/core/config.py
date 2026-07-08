@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     app_port: int = 8700
 
     postgres_host: str = "postgres"
-    postgres_port: int = 5700
+    postgres_port: int = 5432
     postgres_db: str = "privacyops"
     postgres_user: str = "pops"
     postgres_password: str = "pops"

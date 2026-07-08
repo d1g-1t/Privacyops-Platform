@@ -12,7 +12,7 @@ router = APIRouter(tags=["health"])
 async def health_check(request: Request):
     return {
         "status": "ok",
-        "service": "privacyops-152fz-control-tower",
+        "service": "privacyops-platform",
         "timestamp": datetime.now(UTC).isoformat(),
     }
 

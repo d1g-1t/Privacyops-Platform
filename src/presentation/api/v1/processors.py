@@ -13,6 +13,8 @@ from src.application.dto.processor_dto import (
     ProcessorReviewResponse,
 )
 from src.application.use_cases.processor_use_cases import ProcessorUseCases
+from fastapi import Depends
+
 from src.infrastructure.security.rbac import require_compliance
 from src.presentation.deps import (
     CurrentTenantId,
@@ -20,7 +22,7 @@ from src.presentation.deps import (
     get_processor_use_cases,
 )
 
-router = APIRouter(prefix="/processors", tags=["processors"], dependencies=[require_compliance])
+router = APIRouter(prefix="/processors", tags=["processors"], dependencies=[Depends(require_compliance)])
 
 
 class RejectBody(BaseModel):

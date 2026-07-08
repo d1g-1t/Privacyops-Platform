@@ -38,6 +38,9 @@ class ConsentTemplateResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 
+CaptureConsentRequest = CreateConsentCaptureRequest
+
+
 class ConsentCaptureResponse(BaseModel):
     id: UUID
     tenant_id: UUID

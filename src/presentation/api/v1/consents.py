@@ -12,6 +12,7 @@ from src.application.dto.consent_dto import (
     CreateConsentTemplateRequest,
 )
 from src.application.use_cases.consent_use_cases import ConsentUseCases
+
 from src.infrastructure.security.rbac import require_compliance
 from src.presentation.deps import (
     CurrentTenantId,
@@ -19,7 +20,7 @@ from src.presentation.deps import (
     get_consent_use_cases,
 )
 
-router = APIRouter(prefix="/consents", tags=["consents"], dependencies=[require_compliance])
+router = APIRouter(prefix="/consents", tags=["consents"], dependencies=[Depends(require_compliance)])
 
 
 @router.post(

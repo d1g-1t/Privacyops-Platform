@@ -19,7 +19,7 @@ from src.presentation.deps import (
     get_activity_use_cases,
 )
 
-router = APIRouter(prefix="/activities", tags=["activities"], dependencies=[require_compliance])
+router = APIRouter(prefix="/activities", tags=["activities"], dependencies=[Depends(require_compliance)])
 
 
 @router.post("", response_model=ActivityResponse, status_code=201, response_class=ORJSONResponse)
@@ -39,7 +39,7 @@ async def list_activities(
     offset: int = Query(0, ge=0),
     limit: int = Query(50, ge=1, le=200),
 ):
-    return await uc.list(tenant_id, offset=offset, limit=limit)
+    return await uc.list_activities(tenant_id, offset=offset, limit=limit)
 
 
 @router.get("/{activity_id}", response_model=ActivityDetailResponse, response_class=ORJSONResponse)

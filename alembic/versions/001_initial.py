@@ -180,7 +180,7 @@ def upgrade() -> None:
         sa.Column("dpa_present", sa.Boolean, server_default=sa.text("false"), nullable=False),
         sa.Column("questionnaire_payload", postgresql.JSONB, server_default=sa.text("'{}'::jsonb")),
         sa.Column("evidence_payload", postgresql.JSONB, server_default=sa.text("'{}'::jsonb")),
-        sa.Column("reviewer_id", postgresql.UUID(as_uuid=True), sa.ForeignKey("users.id"), nullable=True),
+        sa.Column("reviewer_id", postgresql.UUID(as_uuid=True), sa.ForeignKey("api_users.id"), nullable=True),
         sa.Column("completed_at", sa.DateTime(timezone=True), nullable=True),
         sa.Column("created_at", sa.DateTime(timezone=True), server_default=sa.text("now()"), nullable=False),
     )
@@ -226,7 +226,7 @@ def upgrade() -> None:
         "audit_events",
         sa.Column("id", postgresql.UUID(as_uuid=True), server_default=sa.text("gen_random_uuid()"), primary_key=True),
         sa.Column("tenant_id", postgresql.UUID(as_uuid=True), sa.ForeignKey("tenants.id", ondelete="CASCADE"), nullable=False),
-        sa.Column("actor_user_id", postgresql.UUID(as_uuid=True), sa.ForeignKey("users.id"), nullable=True),
+        sa.Column("actor_user_id", postgresql.UUID(as_uuid=True), sa.ForeignKey("api_users.id"), nullable=True),
         sa.Column("resource_type", sa.String(100), nullable=False),
         sa.Column("resource_id", sa.String(255), nullable=True),
         sa.Column("event_type", sa.String(100), nullable=False),
@@ -265,5 +265,5 @@ def downgrade() -> None:
     op.drop_table("consent_templates")
     op.drop_table("legal_basis_records")
     op.drop_table("data_processing_activities")
-    op.drop_table("users")
+    op.drop_table("api_users")
     op.drop_table("tenants")

@@ -5,19 +5,17 @@ from datetime import UTC, datetime, timedelta
 from typing import Any
 from uuid import UUID
 
+import bcrypt
 import pyseto
-from passlib.context import CryptContext
 from pyseto import Key
-
-_pwd_ctx = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def hash_password(plain: str) -> str:
-    return _pwd_ctx.hash(plain)
+    return bcrypt.hashpw(plain.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return _pwd_ctx.verify(plain, hashed)
+    return bcrypt.checkpw(plain.encode("utf-8"), hashed.encode("utf-8"))
 
 
 def _build_key(secret: str) -> Key:
@@ -109,4 +107,3 @@ def decode_paseto_token(token: str) -> dict[str, Any]:
     if "tid" in payload and "tenant_id" not in payload:
         payload["tenant_id"] = payload["tid"]
     return payload
-

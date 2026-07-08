@@ -11,6 +11,8 @@ from src.application.dto.incident_dto import (
     UpdateIncidentRequest,
 )
 from src.application.use_cases.incident_use_cases import IncidentUseCases
+from fastapi import Depends
+
 from src.infrastructure.security.rbac import require_dpo
 from src.presentation.deps import (
     CurrentTenantId,
@@ -18,7 +20,7 @@ from src.presentation.deps import (
     get_incident_use_cases,
 )
 
-router = APIRouter(prefix="/incidents", tags=["incidents"], dependencies=[require_dpo])
+router = APIRouter(prefix="/incidents", tags=["incidents"], dependencies=[Depends(require_dpo)])
 
 
 @router.post("", response_model=IncidentResponse, status_code=201, response_class=ORJSONResponse)

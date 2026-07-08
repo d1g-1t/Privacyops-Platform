@@ -8,10 +8,12 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.infrastructure.database.repositories.audit_repository import SqlAlchemyAuditRepository
 from src.infrastructure.database.session import get_session
+from fastapi import Depends
+
 from src.infrastructure.security.rbac import require_admin
 from src.presentation.deps import CurrentTenantId
 
-router = APIRouter(prefix="/audit", tags=["audit"], dependencies=[require_admin])
+router = APIRouter(prefix="/audit", tags=["audit"], dependencies=[Depends(require_admin)])
 
 
 @router.get("", response_class=ORJSONResponse)

@@ -37,3 +37,10 @@ class IncidentResponse(BaseModel):
     resolved_at: datetime | None
 
     model_config = {"from_attributes": True}
+
+
+class UpdateIncidentRequest(BaseModel):
+    status: str | None = None
+    severity: str | None = None
+    resolution: str | None = None
+    roskomnadzor_notified: bool | None = None

@@ -9,13 +9,15 @@ from src.application.dto.analytics_dto import (
     TrendPointResponse,
 )
 from src.application.use_cases.analytics_use_cases import AnalyticsUseCases
+from fastapi import Depends
+
 from src.infrastructure.security.rbac import require_viewer
 from src.presentation.deps import (
     CurrentTenantId,
     get_analytics_use_cases,
 )
 
-router = APIRouter(prefix="/analytics", tags=["analytics"], dependencies=[require_viewer])
+router = APIRouter(prefix="/analytics", tags=["analytics"], dependencies=[Depends(require_viewer)])
 
 
 @router.get("/dashboard", response_model=AnalyticsDashboardResponse, response_class=ORJSONResponse)
