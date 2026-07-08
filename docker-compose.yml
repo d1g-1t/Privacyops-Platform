@@ -1,0 +1,126 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runtime
+    command: uvicorn src.main:app --host 0.0.0.0 --port 8700
+    env_file: .env
+    ports: ["8700:8700"]
+    depends_on:
+      postgres: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4700
+      OTEL_SERVICE_NAME: privacyops-api
+    networks: [privacyops]
+
+  worker:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runtime
+    command: >-
+      celery -A src.infrastructure.queue.celery_app worker
+      -Q privacy.registry,privacy.dsr,privacy.monitoring,privacy.incidents,privacy.analytics
+      -c 4 --loglevel=info
+    env_file: .env
+    depends_on: [postgres, redis]
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://tempo:4700
+      OTEL_SERVICE_NAME: privacyops-worker
+    networks: [privacyops]
+
+  beat:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: runtime
+    command: celery -A src.infrastructure.queue.celery_app beat --loglevel=info
+    env_file: .env
+    depends_on: [redis, postgres]
+    networks: [privacyops]
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: privacyops
+      POSTGRES_USER: pops
+      POSTGRES_PASSWORD: pops
+    ports: ["5700:5432"]
+    volumes: [postgres_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pops -d privacyops"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [privacyops]
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD:-change-me-redis-secret}
+    ports: ["6700:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-change-me-redis-secret}", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks: [privacyops]
+
+  ollama:
+    image: ollama/ollama:latest
+    ports: ["11700:11434"]
+    volumes:
+      - ollama_data:/root/.ollama
+    networks: [privacyops]
+
+  flower:
+    image: mher/flower:2.0
+    command: celery --broker=redis://:${REDIS_PASSWORD:-change-me-redis-secret}@redis:6379/0 flower --port=5701
+    ports: ["5701:5701"]
+    depends_on: [redis]
+    networks: [privacyops]
+
+  prometheus:
+    image: prom/prometheus:v2.51.0
+    ports: ["9700:9090"]
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks: [privacyops]
+
+  tempo:
+    image: grafana/tempo:2.4.0
+    command: ["-config.file=/etc/tempo.yaml"]
+    ports: ["4700:4317", "3700:3200"]
+    volumes:
+      - ./docker/tempo/tempo.yml:/etc/tempo.yaml:ro
+      - tempo_data:/var/tempo
+    networks: [privacyops]
+
+  loki:
+    image: grafana/loki:2.9.8
+    command: -config.file=/etc/loki/local-config.yaml
+    ports: ["3701:3100"]
+    volumes:
+      - ./docker/loki/local-config.yaml:/etc/loki/local-config.yaml:ro
+    networks: [privacyops]
+
+  grafana:
+    image: grafana/grafana:10.4.0
+    ports: ["3702:3000"]
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./docker/grafana/provisioning:/etc/grafana/provisioning
+      - ./docker/grafana/dashboards:/var/lib/grafana/dashboards
+    depends_on: [prometheus, tempo, loki]
+    networks: [privacyops]
+
+volumes:
+  postgres_data:
+  ollama_data:
+  tempo_data:
+  grafana_data:
+
+networks:
+  privacyops:
+    driver: bridge
