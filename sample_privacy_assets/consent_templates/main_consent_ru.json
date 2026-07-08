@@ -1,0 +1,13 @@
+{
+  "name": "Consent to the Processing of Personal Data — Main",
+  "purpose": "Customer Identification and Service",
+  "version": 1,
+  "body_ru": "I, the undersigned, in accordance with the requirements of Federal Law No. 152-FZ of July 27, 2006 \"On Personal Data\", hereby give my free, informed, specific and conscious consent to LLC \"Absolut\" (hereinafter — the Operator) to process the following categories of my personal data:\n\n— Last name, first name, patronymic;\n— Email address;\n— Phone number.\n\nPurpose of processing: identification when contacting support, sending information about the status of applications and contracts.\n\nList of actions with personal data: collection, recording, systematization, accumulation, storage, clarification (updating, modification), retrieval, use, transfer (provision, access), depersonalization, blocking, deletion, destruction.\n\nValidity period: 3 (three) years from the date of signing or until the consent is revoked.\n\nConsent may be revoked by sending a written statement to: privacy@example.ru",
+  "body_en": "I, the undersigned, in accordance with the requirements of Federal Law No. 152-FZ of July 27, 2006 \"On Personal Data\", hereby give my free, informed, specific and conscious consent to LLC \"Absolut\" (hereinafter — the Operator) to process the following categories of my personal data:\n\n— Last name, first name, patronymic;\n— Email address;\n— Phone number.\n\nPurpose of processing: identification when contacting support, sending information about the status of applications and contracts.\n\nList of actions with personal data: collection, recording, systematization, accumulation, storage, clarification (updating, modification), retrieval, use, transfer (provision, access), depersonalization, blocking, deletion, destruction.\n\nValidity period: 3 (three) years from the date of signing or until the consent is revoked.\n\nConsent may be revoked by sending a written statement to: privacy@example.ru",
+  "metadata": {
+    "law_article": "152-FZ Art. 9",
+    "data_categories": ["identification", "contact"],
+    "channel": "web_form",
+    "retention_years": 3
+  }
+}
