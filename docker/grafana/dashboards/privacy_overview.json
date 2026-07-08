@@ -1,0 +1,44 @@
+{
+  "dashboard": {
+    "title": "Privacyops-Platform Overview",
+    "uid": "privacyops-overview",
+    "panels": [
+      {
+        "title": "Open DSRs",
+        "type": "stat",
+        "targets": [{"expr": "privacy_dsr_open_total"}],
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0}
+      },
+      {
+        "title": "Overdue DSRs",
+        "type": "stat",
+        "targets": [{"expr": "privacy_dsr_overdue_total"}],
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0}
+      },
+      {
+        "title": "Open Incidents",
+        "type": "stat",
+        "targets": [{"expr": "privacy_incidents_open_total"}],
+        "gridPos": {"h": 4, "w": 6, "x": 12, "y": 0}
+      },
+      {
+        "title": "Localization Failures",
+        "type": "stat",
+        "targets": [{"expr": "privacy_localization_failures_total"}],
+        "gridPos": {"h": 4, "w": 6, "x": 18, "y": 0}
+      },
+      {
+        "title": "Processing Activities",
+        "type": "timeseries",
+        "targets": [{"expr": "privacy_processing_activities_total"}],
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4}
+      },
+      {
+        "title": "Processor Risk Scores",
+        "type": "timeseries",
+        "targets": [{"expr": "privacy_processor_reviews_total"}],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4}
+      }
+    ]
+  }
+}
