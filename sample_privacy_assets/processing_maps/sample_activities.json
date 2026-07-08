@@ -1,0 +1,66 @@
+[
+  {
+    "name": "Employee HR Data Processing",
+    "purpose": "Personnel management, HR records, payroll calculation",
+    "legal_basis": "CONTRACT",
+    "article_reference": "Labor Code of the Russian Federation Art. 86",
+    "data_categories": ["full_name", "birth_date", "snils", "inn", "bank_details", "address"],
+    "subject_categories": ["employees"],
+    "storage_location": "RU-MOSCOW",
+    "retention_days": 1825,
+    "status": "ACTIVE",
+    "risk_level": "MEDIUM",
+    "notes": "Mandatory processing to comply with labor legislation requirements"
+  },
+  {
+    "name": "User Registration and Authentication",
+    "purpose": "Providing access to the service, managing user accounts",
+    "legal_basis": "CONTRACT",
+    "article_reference": "Federal Law 152-FZ Art. 6 Part 1 Clause 5",
+    "data_categories": ["email", "phone", "full_name", "password_hash"],
+    "subject_categories": ["registered_users"],
+    "storage_location": "RU-NOVOSIBIRSK",
+    "retention_days": 1095,
+    "status": "ACTIVE",
+    "risk_level": "LOW"
+  },
+  {
+    "name": "Marketing Emails and Push Notifications",
+    "purpose": "Informing about new products, promotions, and special offers",
+    "legal_basis": "CONSENT",
+    "article_reference": "Federal Law 152-FZ Art. 9",
+    "data_categories": ["email", "phone", "preferences"],
+    "subject_categories": ["subscribers", "registered_users"],
+    "storage_location": "RU-MOSCOW",
+    "retention_days": 365,
+    "status": "ACTIVE",
+    "risk_level": "LOW",
+    "notes": "Requires explicit consent of the data subject. Unsubscribe option is provided in each email."
+  },
+  {
+    "name": "User Behavior Analytics",
+    "purpose": "Improving user experience, evaluating interface effectiveness",
+    "legal_basis": "LEGITIMATE_INTEREST",
+    "article_reference": "Federal Law 152-FZ Art. 6 Part 1 Clause 5",
+    "data_categories": ["ip_address", "cookie", "clickstream", "device_fingerprint"],
+    "subject_categories": ["website_visitors", "registered_users"],
+    "storage_location": "RU-MOSCOW",
+    "retention_days": 90,
+    "status": "ACTIVE",
+    "risk_level": "LOW",
+    "notes": "Pseudonymization is applied. IP addresses are truncated to /24 before storage."
+  },
+  {
+    "name": "Payment Data Processing",
+    "purpose": "Processing payment transactions, complying with PCI DSS requirements",
+    "legal_basis": "CONTRACT",
+    "article_reference": "Federal Law 161-FZ Art. 8",
+    "data_categories": ["card_last4", "payment_token", "billing_address"],
+    "subject_categories": ["paying_customers"],
+    "storage_location": "RU-SPB",
+    "retention_days": 1825,
+    "status": "ACTIVE",
+    "risk_level": "HIGH",
+    "notes": "Only payment provider tokens are stored. Full card details are not stored (PCI DSS scope)."
+  }
+]
